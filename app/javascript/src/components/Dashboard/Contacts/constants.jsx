@@ -12,6 +12,17 @@ export const CONTACTS_FORM_INITIAL_FORM_VALUES = {
   role: null,
 };
 
+export const ROLE_OPTIONS = [
+  {
+    label: "Value One",
+    value: "value1",
+  },
+  {
+    label: "Value Two",
+    value: "value2",
+  },
+];
+
 export const CONTACTS_FORM_VALIDATION_SCHEMA = yup.object().shape({
   first_name: yup.string().required("First Name is required"),
   last_name: yup.string().required("Last Name is required"),
@@ -20,8 +31,8 @@ export const CONTACTS_FORM_VALIDATION_SCHEMA = yup.object().shape({
     .object()
     .nullable()
     .shape({
-      label: yup.string(),
-      value: yup.string(),
+      label: yup.string().oneOf(ROLE_OPTIONS.map(tag => tag.label)),
+      value: yup.string().oneOf(ROLE_OPTIONS.map(tag => tag.value)),
     })
     .required("Role is required"),
 });
