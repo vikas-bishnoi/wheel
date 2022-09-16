@@ -55,7 +55,7 @@ export const NOTES_FORM_INITIAL_FORM_VALUES = {
   title: "",
   description: "",
   assigned_contact: null,
-  tags: null,
+  tags: [],
 };
 
 export const NOTES_FORM_VALIDATION_SCHEMA = yup.object().shape({
@@ -65,18 +65,26 @@ export const NOTES_FORM_VALIDATION_SCHEMA = yup.object().shape({
     .object()
     .nullable()
     .shape({
-      label: yup.string().oneOf(ASSIGNED_CONTACT_OPTIONS.map(tag => tag.label)),
-      value: yup.string().oneOf(ASSIGNED_CONTACT_OPTIONS.map(tag => tag.value)),
+      label: yup
+        .string()
+        .oneOf(ASSIGNED_CONTACT_OPTIONS.map(contact => contact.label)),
+      value: yup
+        .string()
+        .oneOf(ASSIGNED_CONTACT_OPTIONS.map(contact => contact.value)),
     })
     .required("Assigned Contact is required"),
   tags: yup
     .array(
-      yup.object().shape({
-        label: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.label)),
-        value: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.value)),
-      })
+      yup
+        .object()
+        .nullable()
+        .shape({
+          label: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.label)),
+          value: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.value)),
+        })
     )
     .nullable()
+    .min(1, "Tag is required")
     .required("Tag is required"),
 });
 
