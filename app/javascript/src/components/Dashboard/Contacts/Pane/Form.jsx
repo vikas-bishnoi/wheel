@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Button, Pane, Toastr } from "neetoui";
 import { Input, Select } from "neetoui/formik";
 
-import { CONTACTS_FORM_VALIDATION_SCHEMA } from "../constants";
+import { CONTACTS_FORM_VALIDATION_SCHEMA, ROLE_OPTIONS } from "../constants";
 
 const ContactForm = ({ onClose, contact }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +25,7 @@ const ContactForm = ({ onClose, contact }) => {
       validateOnBlur={submitted}
       validateOnChange={submitted}
       validationSchema={CONTACTS_FORM_VALIDATION_SCHEMA}
-      onSubmit={() => handleSubmit()}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <Form className="w-full">
@@ -52,17 +52,8 @@ const ContactForm = ({ onClose, contact }) => {
               className="w-full flex-grow-0"
               label="Role"
               name="role"
+              options={ROLE_OPTIONS}
               placeholder="Select Role"
-              options={[
-                {
-                  label: "Value One",
-                  value: "value1",
-                },
-                {
-                  label: "Value Two",
-                  value: "value2",
-                },
-              ]}
             />
           </Pane.Body>
           <Pane.Footer>
@@ -81,7 +72,7 @@ const ContactForm = ({ onClose, contact }) => {
               size="large"
               style="text"
               type="reset"
-              onClick={() => onClose()}
+              onClick={onClose}
             />
           </Pane.Footer>
         </Form>

@@ -4,7 +4,11 @@ import { Formik, Form } from "formik";
 import { Button, Pane, Toastr } from "neetoui";
 import { Input, Select, Textarea } from "neetoui/formik";
 
-import { NOTES_FORM_VALIDATION_SCHEMA } from "../constants";
+import {
+  NOTES_FORM_VALIDATION_SCHEMA,
+  ASSIGNED_CONTACT_OPTIONS,
+  TAG_OPTIONS,
+} from "../constants";
 
 const NoteForm = ({ onClose, note, isEdit }) => {
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +29,7 @@ const NoteForm = ({ onClose, note, isEdit }) => {
       validateOnBlur={submitted}
       validateOnChange={submitted}
       validationSchema={NOTES_FORM_VALIDATION_SCHEMA}
-      onSubmit={() => handleSubmit()}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <Form className="w-full">
@@ -47,61 +51,17 @@ const NoteForm = ({ onClose, note, isEdit }) => {
               className="w-full flex-grow-0"
               label="Assigned Contact"
               name="assigned_contact"
+              options={ASSIGNED_CONTACT_OPTIONS}
               placeholder="Select an Option"
-              options={[
-                {
-                  label: "Value One",
-                  value: "value1",
-                },
-                {
-                  label: "Value Two",
-                  value: "value2",
-                },
-                {
-                  label: "Value Three",
-                  value: "value3",
-                },
-                {
-                  label: "Value Four",
-                  value: "value4",
-                },
-                {
-                  label: "Value Five",
-                  value: "value5",
-                },
-              ]}
             />
             <Select
+              isMulti
+              isSearchable
               className="w-full flex-grow-0"
               label="Tags"
-              name="tag"
+              name="tags"
+              options={TAG_OPTIONS}
               placeholder="Select an Option"
-              options={[
-                {
-                  label: "Getting Started",
-                  value: "getting_started",
-                },
-                {
-                  label: "Onboarding",
-                  value: "onboarding",
-                },
-                {
-                  label: "User Flow",
-                  value: "user_flow",
-                },
-                {
-                  label: "UX",
-                  value: "ux",
-                },
-                {
-                  label: "Bugs",
-                  value: "bugs",
-                },
-                {
-                  label: "V2",
-                  value: "v2",
-                },
-              ]}
             />
           </Pane.Body>
           <Pane.Footer>
@@ -120,7 +80,7 @@ const NoteForm = ({ onClose, note, isEdit }) => {
               size="large"
               style="text"
               type="reset"
-              onClick={() => onClose()}
+              onClick={onClose}
             />
           </Pane.Footer>
         </Form>

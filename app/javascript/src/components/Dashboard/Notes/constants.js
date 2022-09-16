@@ -1,11 +1,61 @@
 import Avatar from "images/avatar.png";
 import * as yup from "yup";
 
+export const TAG_OPTIONS = [
+  {
+    label: "Getting Started",
+    value: "getting_started",
+  },
+  {
+    label: "Onboarding",
+    value: "onboarding",
+  },
+  {
+    label: "User Flow",
+    value: "user_flow",
+  },
+  {
+    label: "UX",
+    value: "ux",
+  },
+  {
+    label: "Bugs",
+    value: "bugs",
+  },
+  {
+    label: "V2",
+    value: "v2",
+  },
+];
+
+export const ASSIGNED_CONTACT_OPTIONS = [
+  {
+    label: "Value One",
+    value: "value1",
+  },
+  {
+    label: "Value Two",
+    value: "value2",
+  },
+  {
+    label: "Value Three",
+    value: "value3",
+  },
+  {
+    label: "Value Four",
+    value: "value4",
+  },
+  {
+    label: "Value Five",
+    value: "value5",
+  },
+];
+
 export const NOTES_FORM_INITIAL_FORM_VALUES = {
   title: "",
   description: "",
   assigned_contact: null,
-  tag: null,
+  tags: null,
 };
 
 export const NOTES_FORM_VALIDATION_SCHEMA = yup.object().shape({
@@ -15,17 +65,18 @@ export const NOTES_FORM_VALIDATION_SCHEMA = yup.object().shape({
     .object()
     .nullable()
     .shape({
-      label: yup.string(),
-      value: yup.string(),
+      label: yup.string().oneOf(ASSIGNED_CONTACT_OPTIONS.map(tag => tag.label)),
+      value: yup.string().oneOf(ASSIGNED_CONTACT_OPTIONS.map(tag => tag.value)),
     })
     .required("Assigned Contact is required"),
-  tag: yup
-    .object()
+  tags: yup
+    .array(
+      yup.object().shape({
+        label: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.label)),
+        value: yup.string().oneOf(TAG_OPTIONS.map(tag => tag.value)),
+      })
+    )
     .nullable()
-    .shape({
-      label: yup.string(),
-      value: yup.string(),
-    })
     .required("Tag is required"),
 });
 
